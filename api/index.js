@@ -1,0 +1,5 @@
+import server from '../dist/server/server.js';
+
+export default function(req) {
+  return server.fetch(req);
+}
