@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { GdgLogo } from "./GdgLogo";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useSecretAccess } from "@/hooks/useSecretAccess";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -17,6 +18,7 @@ export function SiteHeader() {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { handleLogoClick } = useSecretAccess();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -36,7 +38,11 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold">
+        <Link 
+          to="/" 
+          onClick={handleLogoClick}
+          className="flex select-none items-center gap-2 font-display text-lg font-semibold"
+        >
           <GdgLogo size={22} />
           <span className="text-foreground">GDG<span className="text-muted-foreground"> · Portfolio</span></span>
         </Link>

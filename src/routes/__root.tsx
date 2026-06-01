@@ -8,6 +8,8 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -117,20 +119,50 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+function AppLayout() {
+  const { settings } = useSiteSettings();
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const hideChrome = path.startsWith("/admin") || path.startsWith("/login");
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && settings?.theme?.primaryColor) {
+      const root = document.documentElement;
+      let colorValue = "var(--google-blue)";
+      
+      if (settings.theme.primaryColor === "google-blue") colorValue = "var(--google-blue)";
+      else if (settings.theme.primaryColor === "google-red") colorValue = "var(--google-red)";
+      else if (settings.theme.primaryColor === "google-yellow") colorValue = "var(--google-yellow)";
+      else if (settings.theme.primaryColor === "google-green") colorValue = "var(--google-green)";
+      else if (
+        settings.theme.primaryColor.startsWith("#") || 
+        settings.theme.primaryColor.startsWith("rgb") || 
+        settings.theme.primaryColor.startsWith("oklch")
+      ) {
+        colorValue = settings.theme.primaryColor;
+      }
+      
+      root.style.setProperty("--primary", colorValue);
+      root.style.setProperty("--ring", colorValue);
+    }
+  }, [settings?.theme?.primaryColor]);
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      {!hideChrome && <SiteHeader />}
+      <main className="flex-1">
+        <Outlet />
+      </main>
+      {!hideChrome && <SiteFooter />}
+    </div>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
-  const path = useRouterState({ select: (s) => s.location.pathname });
-  const hideChrome = path.startsWith("/admin") || path.startsWith("/login");
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
-        {!hideChrome && <SiteHeader />}
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        {!hideChrome && <SiteFooter />}
-      </div>
+      <AppLayout />
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
   );

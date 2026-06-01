@@ -159,6 +159,7 @@ export type Database = {
           name: string
           resume_url: string | null
           role: string
+          settings: Json | null
           tagline: string
           twitter: string | null
           updated_at: string
@@ -175,6 +176,7 @@ export type Database = {
           name?: string
           resume_url?: string | null
           role?: string
+          settings?: Json | null
           tagline?: string
           twitter?: string | null
           updated_at?: string
@@ -191,6 +193,7 @@ export type Database = {
           name?: string
           resume_url?: string | null
           role?: string
+          settings?: Json | null
           tagline?: string
           twitter?: string | null
           updated_at?: string

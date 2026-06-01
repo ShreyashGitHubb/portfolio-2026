@@ -148,6 +148,21 @@
     background-size: 24px 24px;
   }
 
+  .line-grid {
+    background-image: linear-gradient(to right, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .bg-drift-slow {
+    animation: bg-drift-anim 120s linear infinite;
+  }
+
+  @keyframes bg-drift-anim {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+  }
+
   /* Animated GDG dots */
   .gdg-dots span {
     display: inline-block;
@@ -172,5 +187,64 @@
     background-position: 0 100%;
     background-size: 100% 3px;
     padding-bottom: 2px;
+  }
+
+  /* Scroll reveal utilities */
+  .reveal-base {
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+  
+  .reveal-fade-in {
+    opacity: 0;
+  }
+  .reveal-fade-in.is-visible {
+    opacity: 1;
+  }
+
+  .reveal-slide-up {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .reveal-slide-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-slide-down {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  .reveal-slide-down.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-slide-left {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  .reveal-slide-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-slide-right {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  .reveal-slide-right.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-scale-up {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  .reveal-scale-up.is-visible {
+    opacity: 1;
+    transform: scale(1);
   }
 }

@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, Link, useRouterState, useNavigate } from "@tan
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { GdgLogo } from "@/components/GdgLogo";
-import { LayoutDashboard, User, Wrench, FolderKanban, Briefcase, Mic, FileText, Mail, LogOut } from "lucide-react";
+import { LayoutDashboard, User, Wrench, FolderKanban, Briefcase, Mic, FileText, Mail, LogOut, Settings } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Admin" }, { name: "robots", content: "noindex" }] }),
@@ -18,6 +18,7 @@ const NAV = [
   { to: "/admin/events", label: "Events", icon: Mic },
   { to: "/admin/blog", label: "Blog", icon: FileText },
   { to: "/admin/messages", label: "Messages", icon: Mail },
+  { to: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 function AdminLayout() {
